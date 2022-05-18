@@ -9,7 +9,7 @@
     email: '',
     password: '',
     password_confirmation: '',
-    role_id: '2'
+    role_id: 2
   })
 
   const router = useRouter()

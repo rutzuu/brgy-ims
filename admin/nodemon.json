@@ -1,0 +1,13 @@
+{
+  "ignore": [
+    "**/node_modules/**",
+    ".git",
+    ".gitignore",
+    "dist/",
+    "coverage/"
+  ],
+  "watch": [
+    "src/*"
+  ],
+  "ext": "js,json,ts"
+}

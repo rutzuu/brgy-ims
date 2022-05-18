@@ -23,6 +23,39 @@ export const Residents = async (req: Request, res: Response) => {
   })
 }
 
+export const ResidentsDashboard = async (req: Request, res: Response) => {
+  const take = 5
+  const page = parseInt(req.query.page as string || '1')
+  const repository = AppDataSource.getRepository(Resident)
+
+  const [data, total] = await repository.findAndCount({
+    take: take,
+    skip: (page - 1) * take,
+  })
+
+  res.send({
+    data: data,
+    meta: {
+      total,
+      page,
+      last_page: Math.ceil(total / take)
+    }
+  })
+}
+
+export const RecentResidents = async (req: Request, res: Response) => {
+  const repository = AppDataSource.getRepository(Resident)
+
+  const [data, total] = await repository.findAndCount()
+
+  res.send({
+    data: data,
+    meta: {
+      total,
+    }
+  })
+}
+
 export const AllResidents = async (req: Request, res: Response) => {
   const repository = AppDataSource.getRepository(Resident)
 

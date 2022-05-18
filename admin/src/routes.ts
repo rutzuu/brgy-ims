@@ -2,8 +2,8 @@ import express, { Router } from 'express'
 import { Register, Login, Authenticate, Logout, UpdateInfo, UpdatePassword } from './controller/auth.controller'
 import { Users, CreateUser, GetUser, UpdateUser, DeleteUser } from './controller/user.controller'
 import { Products, CreateProduct, GetProduct, UpdateProduct, DeleteProduct } from './controller/product.controller'
-import { AllResidents, Residents, CreateResident, GetResident, UpdateResident, DeleteResident } from './controller/resident.controller'
-import { Chart, ExportCSV, Orders, CreateOrder, GetOrder, UpdateOrder, DeleteOrder } from './controller/order.controller'
+import { AllResidents, RecentResidents, Residents, CreateResident, GetResident, UpdateResident, DeleteResident, ResidentsDashboard } from './controller/resident.controller'
+import { Chart, ExportCSV, Orders, CreateOrder, GetOrder, UpdateOrder, DeleteOrder, RecentOrders, OrdersDashboard } from './controller/order.controller'
 import { UploadImages } from './controller/image.controller'
 import { Permissions } from './controller/permission.controller'
 import { Roles, CreateRole, GetRole, UpdateRole, DeleteRole } from './controller/role.controller'
@@ -49,6 +49,8 @@ export const routes = (router: Router) => {
   router.post('/api/residents', AuthMiddleware, PermissionMiddleware('residents'), CreateResident)
   //GET
   router.get('/api/residents/all', AuthMiddleware, PermissionMiddleware('residents'), AllResidents)
+  router.get('/api/residents/recent', AuthMiddleware, PermissionMiddleware('residents'), RecentResidents)
+  router.get('/api/residents/dashboard', AuthMiddleware, PermissionMiddleware('residents'), ResidentsDashboard)
   router.get('/api/residents', AuthMiddleware, PermissionMiddleware('residents'), Residents)
   router.get('/api/residents/:id', AuthMiddleware, PermissionMiddleware('residents'), GetResident)
   //PUT
@@ -84,6 +86,8 @@ export const routes = (router: Router) => {
   router.post('/api/orders', AuthMiddleware, PermissionMiddleware('orders'), CreateOrder)
   //GET
   router.get('/api/orders', AuthMiddleware, Orders)
+  router.get('/api/orders/recent', AuthMiddleware, RecentOrders)
+  router.get('/api/orders/dashboard', AuthMiddleware, OrdersDashboard)
   router.get('/api/orders/:id', AuthMiddleware, GetOrder)
   router.get('/api/orders/chart', AuthMiddleware, Chart)
   //PUT

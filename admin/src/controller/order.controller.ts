@@ -25,6 +25,46 @@ export const Orders = async (req: Request, res: Response) => {
   })
 }
 
+export const OrdersDashboard = async (req: Request, res: Response) => {
+  const take = 5
+  const page = parseInt(req.query.page as string || '1')
+
+  const repository = AppDataSource.getRepository(Order)
+
+  const [data, total] = await repository.findAndCount({
+    take: take,
+    skip: (page - 1) * take,
+    relations: { product: true, resident: true }
+  })
+
+  res.send({
+    data: data,
+    meta: {
+      total,
+      page,
+      last_page: Math.ceil(total / take)
+    }
+  })
+}
+
+export const RecentOrders = async (req: Request, res: Response) => {
+  const take = 5
+  const page = parseInt(req.query.page as string || '1')
+
+  const repository = AppDataSource.getRepository(Order)
+
+  const [data, total] = await repository.findAndCount()
+
+  res.send({
+    data: data,
+    meta: {
+      total,
+      page,
+      last_page: Math.ceil(total / take)
+    }
+  })
+}
+
 export const CreateOrder = async (req: Request, res: Response) => {
   const { product_id, resident_id, ...body } = req.body
 

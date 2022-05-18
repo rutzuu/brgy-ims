@@ -19,8 +19,8 @@ const data = reactive ({
   email: '',
   phone: '',
   address: '',
-  date_issued: '',
-  valid_until: '',
+  date_issued: validityDate,
+  valid_until: validity,
   date_of_birth: '',
   gender: '',
   place_of_birth: '',
@@ -135,14 +135,14 @@ const submit = async () => {
                   <div class="sm:col-span-3">
                     <label for="date-issued" class="block text-sm font-medium text-gray-700">Date Issued</label>
                     <div class="mt-1">
-                      <input :value="currentDate" type="text" disabled name="date-issued" id="date-issued" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                      <input v-model="data.date_issued" type="text" disabled name="date-issued" id="date-issued" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                     </div>
                   </div>
 
                   <div class="sm:col-span-3">
                     <label for="valid-until" class="block text-sm font-medium text-gray-700">Valid Until</label>
                     <div class="mt-1">
-                      <input :value="validityDate" type="text" disabled name="valid-until" id="valid-until" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                      <input v-model="data.valid_until" type="text" disabled name="valid-until" id="valid-until" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                     </div>
                   </div>
 

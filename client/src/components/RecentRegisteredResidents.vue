@@ -1,49 +1,24 @@
 <script setup lang="ts">
 import { UserCircleIcon } from '@heroicons/vue/outline'
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+import Paginator from '../components/Paginator.vue'
 
-const residents = [
-    {
-      id: 1,
-      name: 'Benjamin Santos',
-      href: '#',
-      address: '1127 Faustino, Quezon City, Metro Manila',
-      date: 'May 10, 2022',
-      datetime: '2022-05-10',
-    },
-    {
-      id: 1,
-      name: 'Benjamin Santos',
-      href: '#',
-      address: '1127 Faustino, Quezon City, Metro Manila',
-      date: 'May 10, 2022',
-      datetime: '2022-05-10',
-    },
-    {
-      id: 1,
-      name: 'Benjamin Santos',
-      href: '#',
-      address: '1127 Faustino, Quezon City, Metro Manila',
-      date: 'May 10, 2022',
-      datetime: '2022-05-10',
-    },
-    {
-      id: 1,
-      name: 'Benjamin Santos',
-      href: '#',
-      address: '1127 Faustino, Quezon City, Metro Manila',
-      date: 'May 10, 2022',
-      datetime: '2022-05-10',
-    },
-    {
-      id: 1,
-      name: 'Benjamin Santos',
-      href: '#',
-      address: '1127 Faustino, Quezon City, Metro Manila',
-      date: 'May 10, 2022',
-      datetime: '2022-05-10',
-    }
-    // More residents...
-]
+const residents = ref()
+const lastPage = ref(0)
+const total = ref()
+const take = ref()
+
+const load = async( page = 1 ) => {
+  const { data } = await axios.get(`/residents/dashboard?page=${page}`)
+  
+  residents.value = data.data
+  lastPage.value = data.meta.last_page
+  total.value = data.meta.total
+  take.value = data.meta.take
+}
+
+onMounted(load)
 </script>
 
 <template>
@@ -100,7 +75,7 @@ const residents = [
                           <a :href="resident.href" class="group inline-flex space-x-2 truncate text-sm">
                             <UserCircleIcon class="flex-shrink-0 h-6 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                             <p class="text-gray-500 truncate group-hover:text-gray-900">
-                              {{ resident.name }}
+                              {{ resident.last_name }} {{ resident.first_name }}
                             </p>
                           </a>
                         </div>
@@ -109,35 +84,13 @@ const residents = [
                         {{ resident.address }}
                       </td>
                       <td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
-                        <time :datetime="resident.datetime">{{ resident.date }}</time>
+                        <time :datetime="resident.datetime">{{ resident.date_issued }}</time>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <!-- Pagination -->
-                <nav class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6" aria-label="Pagination">
-                  <div class="hidden sm:block">
-                    <p class="text-sm text-gray-700">
-                      Showing
-                      {{ ' ' }}
-                      <span class="font-medium">1</span>
-                      {{ ' ' }}
-                      to
-                      {{ ' ' }}
-                      <span class="font-medium">5</span>
-                      {{ ' ' }}
-                      of
-                      {{ ' ' }}
-                      <span class="font-medium">20</span>
-                      {{ ' ' }}
-                      results
-                    </p>
-                  </div>
-                  <div class="flex-1 flex justify-between sm:justify-end">
-                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Previous </a>
-                    <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Next </a>
-                  </div>
-                </nav>
+                <Paginator :last-page="lastPage" :take="take" :total="total" @page-changed="load($event)"/>
               </div>
             </div>
           </div>

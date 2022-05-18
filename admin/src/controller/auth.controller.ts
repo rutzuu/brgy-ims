@@ -32,7 +32,7 @@ export const Register = async (req: Request, res: Response) => {
     last_name: body.last_name,
     email: body.email,
     password: await bcryptjs.hash(body.password, 10),
-    // role_id: 2
+    role_id: body.role_id
   })
 
   res.send(user)

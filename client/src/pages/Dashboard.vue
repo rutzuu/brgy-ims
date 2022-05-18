@@ -1,11 +1,38 @@
 <script setup lang="ts">
 import { IdentificationIcon, MailOpenIcon, UsersIcon } from '@heroicons/vue/outline'
+import axios from 'axios';
+import { onMounted, reactive, ref } from 'vue';
 import RecentOrders from '../components/RecentOrders.vue';
 import RecentRegisteredResidents from '../components/RecentRegisteredResidents.vue';
 
+const account = ref()
+const recentOrders = ref()
+const recentResidents= ref()
+
+const accounts = reactive({
+  first_name: '',
+  last_name: '',
+  id: ''
+})
+
+onMounted( async () => {
+  const { data } = await axios.get('/user')
+  const orderResponse = await axios.get('/orders/recent')
+  const residentsResponse = await axios.get('/residents/recent')
+
+  recentOrders.value = orderResponse.data.meta.total
+  recentResidents.value = residentsResponse.data.meta.total
+  console.log(recentOrders.value)
+  accounts.first_name = data.first_name
+  accounts.last_name = data.last_name
+  accounts.id = data.id
+
+  account.value =`${data.first_name} ${data.last_name}`
+})
+
 const stats = [
-  { id: 1, name: 'Orders Today', stat: '72', icon: MailOpenIcon, change: '122', changeType: 'increase' },
-  { id: 2, name: 'Newly Registered Residents Today', stat: '58', icon: UsersIcon, change: '5.4%', changeType: 'increase' },
+  { id: 1, name: 'Orders Today', stat: recentOrders, icon: MailOpenIcon, href: '/orders' },
+  { id: 2, name: 'Newly Registered Residents Today', stat: recentResidents, icon: UsersIcon, href: '/residents' },
 ]
 
 </script>
@@ -21,21 +48,21 @@ const stats = [
               <div class="flex-1 min-w-0">
                 <!-- Employee Profile -->
                 <div class="flex items-center">
-                  <div class="hidden sm:inline-flex align-middle items-center justify-center h-16 w-16 bg-blue-400 rounded-full">
+                  <!-- <div class="hidden sm:inline-flex align-middle items-center justify-center h-16 w-16 bg-blue-400 rounded-full">
                       <span class="text-xl font-medium leading-none text-white">JD</span>
-                  </div>
+                  </div> -->
                   <div>
                     <div class="flex items-center">
                       <div class="inline-flex items-center text-center justify-center h-16 w-16 rounded-full bg-blue-400 sm:hidden">
                         <span class="text-2xl font-medium text-center leading-none text-white">JD</span>
                       </div>
-                      <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">Juan Dela Cruz</h1>
+                      <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:leading-9 sm:truncate">{{ account }}</h1>
                     </div>
                     <dl class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
                       <dt class="sr-only">Employee Number</dt>
                       <dd class="flex items-center text-sm text-gray-500 font-medium capitalize sm:mr-6">
                         <IdentificationIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                          Employee #10001
+                          Employee #{{ accounts.id }}
                       </dd>
                     </dl>
                   </div>
@@ -76,10 +103,10 @@ const stats = [
                 </p>
                 <div class="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6">
                   <div class="text-sm">
-                    <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                    <router-link :to="item.href" class="font-medium text-blue-600 hover:text-blue-500">
                       View all
                       <span class="sr-only"> {{ item.name }} stats</span>
-                    </a>
+                    </router-link>
                   </div>
                 </div>
               </dd>

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter()
+const route = useRoute()
 const date = new Date()
 const currentDate = new Date(date).toLocaleDateString()
 
@@ -18,7 +19,7 @@ const data = reactive ({
   first_name: '',
   middle_name: '',
   email: '',
-  phone: '',
+  phone: route.params.id,
   address: '',
   date_issued: validityDate,
   valid_until: validUntil,
@@ -33,7 +34,8 @@ const submit = async () => {
     if(confirm('Are you sure you are creating this resident?')) {
       await axios.post('/residents', data)
       alert('Product created successfully')
-      router.push('/residents')
+      const getResidentId = await axios.get(`/residents/login/${data.phone}`)
+      await router.push(`/resident/${getResidentId.data.id}`)
     }
   }
 </script>
@@ -49,7 +51,7 @@ const submit = async () => {
             <div class="space-y-6 sm:space-y-5">
               <div class="pt-8">
                 <div>
-                  <h3 class="text-lg leading-6 font-medium text-gray-900">Create New Resident</h3>
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">Create New Resident Profile</h3>
                   <p class="mt-1 text-sm text-gray-500">Create new resident providing their information below.</p>
                 </div>
                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">

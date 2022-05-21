@@ -56,6 +56,36 @@ export const RecentResidents = async (req: Request, res: Response) => {
   })
 }
 
+export const LoginResident = async (req: Request, res: Response) => {
+  const repository = AppDataSource.getRepository(Resident)
+
+  // const residentEmail = await repository.findOne({
+  //   where: {
+  //     email: req.body.email
+  //   }
+  // })
+
+  const residentPhone = await repository.findOne({
+    where: {
+      phone: req.params.phone
+    }
+  })
+
+  try {
+    // if (residentEmail.email) {
+    //   res.send(residentEmail)
+    // }
+    if (residentPhone.phone) {
+      res.send(residentPhone)
+    }
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      error: error.message
+    })
+  }
+}
+
 export const AllResidents = async (req: Request, res: Response) => {
   const repository = AppDataSource.getRepository(Resident)
 

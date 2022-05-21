@@ -2,7 +2,7 @@ import express, { Router } from 'express'
 import { Register, Login, Authenticate, Logout, UpdateInfo, UpdatePassword } from './controller/auth.controller'
 import { Users, CreateUser, GetUser, UpdateUser, DeleteUser } from './controller/user.controller'
 import { Products, CreateProduct, GetProduct, UpdateProduct, DeleteProduct } from './controller/product.controller'
-import { AllResidents, RecentResidents, Residents, CreateResident, GetResident, UpdateResident, DeleteResident, ResidentsDashboard } from './controller/resident.controller'
+import { AllResidents, RecentResidents, Residents, CreateResident, GetResident, UpdateResident, DeleteResident, ResidentsDashboard, LoginResident } from './controller/resident.controller'
 import { Chart, ExportCSV, Orders, CreateOrder, GetOrder, UpdateOrder, DeleteOrder, RecentOrders, OrdersDashboard } from './controller/order.controller'
 import { UploadImages } from './controller/image.controller'
 import { Permissions } from './controller/permission.controller'
@@ -46,15 +46,16 @@ export const routes = (router: Router) => {
 
   //Resident controllers
   //POST
-  router.post('/api/residents', AuthMiddleware, PermissionMiddleware('residents'), CreateResident)
+  router.post('/api/residents', CreateResident)
   //GET
+  router.get('/api/residents/login/:phone', LoginResident)
   router.get('/api/residents/all', AuthMiddleware, PermissionMiddleware('residents'), AllResidents)
   router.get('/api/residents/recent', AuthMiddleware, PermissionMiddleware('residents'), RecentResidents)
   router.get('/api/residents/dashboard', AuthMiddleware, PermissionMiddleware('residents'), ResidentsDashboard)
   router.get('/api/residents', AuthMiddleware, PermissionMiddleware('residents'), Residents)
-  router.get('/api/residents/:id', AuthMiddleware, PermissionMiddleware('residents'), GetResident)
+  router.get('/api/residents/:id', GetResident)
   //PUT
-  router.put('/api/residents/:id', AuthMiddleware, PermissionMiddleware('residents'), UpdateResident)
+  router.put('/api/residents/:id', UpdateResident)
   //DELETE
   router.delete('/api/resident/:id', AuthMiddleware, PermissionMiddleware('residents'), DeleteResident)
 

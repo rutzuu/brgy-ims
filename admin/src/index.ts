@@ -13,7 +13,7 @@ AppDataSource.initialize().then(() => {
   app.use(CookieParser())
   app.use(cors({
     credentials: true,
-    origin: ['http://localhost:8080']
+    origin: ['http://localhost:8080', 'http://localhost:8888']
   }))
 
   routes(app)

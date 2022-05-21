@@ -20,9 +20,13 @@ onMounted(load)
 
 const del = async (id: number) => {
   if (confirm('Are you sure?')) {
-    await axios.delete(`/users/${id}`)
-    await alert('User deleted.')
-    users.value = users.value.filter((u: User) => u.id !== id)
+    try {
+      await axios.delete(`/users/${id}`)
+      await alert('User deleted.')
+      users.value = users.value.filter((u: User) => u.id !== id)
+    } catch (error) {
+      alert(error)
+    }
   }
 }
 

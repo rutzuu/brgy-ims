@@ -10,9 +10,9 @@ export const Users = async (req: Request, res: Response) => {
   const repository = AppDataSource.getRepository(User)
 
   const [data, total] = await repository.findAndCount({
+    relations: ['role'],
     take: take,
-    skip: (page - 1) * take,
-    relations: ['role']
+    skip: (page - 1) * take
   })
 
   res.send({

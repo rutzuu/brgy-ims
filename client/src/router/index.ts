@@ -9,12 +9,12 @@ import UserEdit from '../pages/users/UserEdit.vue'
 import Roles from '../pages/roles/Roles.vue'
 import RoleCreate from '../pages/roles/RoleCreate.vue'
 import RoleEdit from '../pages/roles/RoleEdit.vue'
-import Products from '../pages/products/Products.vue'
-import ProductCreate from '../pages/products/ProductCreate.vue'
-import ProductEdit from '../pages/products/ProductEdit.vue'
-import Orders from '../pages/orders/Orders.vue'
-import OrderCreate from '../pages/orders/OrderCreate.vue'
-import OrderEdit from '../pages/orders/OrderEdit.vue'
+import Documents from '../pages/documents/Documents.vue'
+import DocumentCreate from '../pages/documents/DocumentCreate.vue'
+import DocumentEdit from '../pages/documents/DocumentEdit.vue'
+import Transactions from '../pages/transactions/Transactions.vue'
+import TransactionCreate from '../pages/transactions/TransactionCreate.vue'
+import TransactionEdit from '../pages/transactions/TransactionEdit.vue'
 import Residents from '../pages/residents/Residents.vue'
 import ResidentCreate from '../pages/residents/ResidentCreate.vue'
 import ResidentEdit from '../pages/residents/ResidentEdit.vue'
@@ -32,15 +32,15 @@ const routes: Array<RouteRecordRaw> = [
         { path: '/roles', component: Roles },
         { path: '/roles/create', component: RoleCreate },
         { path: '/roles/:id/edit', component: RoleEdit },
-        { path: '/products', component: Products },
-        { path: '/products/create', component: ProductCreate },
-        { path: '/products/:id/edit', component: ProductEdit },
+        { path: '/documents', component: Documents },
+        { path: '/documents/create', component: DocumentCreate },
+        { path: '/documents/:id/edit', component: DocumentEdit },
         { path: '/residents', component: Residents },
         { path: '/residents/create', component: ResidentCreate },
         { path: '/residents/:id/edit', component: ResidentEdit },
-        { path: '/orders', component: Orders },
-        { path: '/orders/create', component: OrderCreate },
-        { path: '/orders/:id/edit', component: OrderEdit },
+        { path: '/transactions', component: Transactions },
+        { path: '/transactions/create', component: TransactionCreate },
+        { path: '/transactions/:id/edit', component: TransactionEdit },
     ]}
     
 ]

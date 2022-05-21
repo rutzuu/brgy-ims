@@ -1,27 +1,21 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { reactive } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, reactive } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter()
-const date = new Date()
-const currentDate = new Date(date).toLocaleDateString()
-
-const validUntilDate = new Date(date.getTime())
-
-const validity = validUntilDate.setFullYear(date.getFullYear() + 1)
-const validUntil = new Date(validity).toLocaleDateString()
-const validityDate = new Date(validity).toLocaleDateString()
+const route = useRoute()
 
 const data = reactive ({
+  id: '',
   last_name: '',
   first_name: '',
   middle_name: '',
   email: '',
   phone: '',
   address: '',
-  date_issued: validityDate,
-  valid_until: validUntil,
+  date_issued: '',
+  valid_until: '',
   date_of_birth: '',
   gender: '',
   place_of_birth: '',
@@ -29,11 +23,30 @@ const data = reactive ({
   civil_status: ''
 })
 
+onMounted( async () => {
+  const response = await axios.get(`/residents/${route.params.id}`)
+
+  data.id = response.data.id
+  data.last_name = response.data.last_name
+  data.first_name = response.data.first_name
+  data.middle_name = response.data.middle_name
+  data.email = response.data.email
+  data.phone = response.data.phone
+  data.address = response.data.address
+  data.date_issued = response.data.date_issued
+  data.valid_until = response.data.valid_until
+  data.date_of_birth = response.data.date_of_birth
+  data.gender = response.data.gender
+  data.place_of_birth = response.data.place_of_birth
+  data.nationality = response.data.nationality
+  data.civil_status = response.data.civil_status
+})
+
 const submit = async () => {
-    if(confirm('Are you sure you are creating this resident?')) {
-      await axios.post('/residents', data)
-      alert('Product created successfully')
-      router.push('/residents')
+    if(confirm('Are you sure you are updating your profile?')) {
+      await axios.put(`/residents/${route.params.id}`, data)
+      alert('Profile updated successfully')
+      router.push(`/resident/${data.id}`)
     }
   }
 </script>
@@ -49,8 +62,8 @@ const submit = async () => {
             <div class="space-y-6 sm:space-y-5">
               <div class="pt-8">
                 <div>
-                  <h3 class="text-lg leading-6 font-medium text-gray-900">Create New Resident</h3>
-                  <p class="mt-1 text-sm text-gray-500">Create new resident providing their information below.</p>
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">Edit Resident Data</h3>
+                  <p class="mt-1 text-sm text-gray-500">Edit the existing resident's data.</p>
                 </div>
                 <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                   <div class="sm:col-span-2">
@@ -97,7 +110,7 @@ const submit = async () => {
                   <div class="sm:col-span-3">
                     <label for="date-of-birth" class="block text-sm font-medium text-gray-700"> Date of Birth</label>
                     <div class="mt-1">
-                      <input v-model="data.date_of_birth" type="date" name="date-of-birth" id="date-of-birth" autocomplete="date-of-birth" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                      <input v-model="data.date_of_birth" type="text" name="date-of-birth" id="date-of-birth" autocomplete="date-of-birth" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                     </div>
                   </div>
                   
@@ -143,7 +156,7 @@ const submit = async () => {
                   <div class="sm:col-span-3">
                     <label for="valid-until" class="block text-sm font-medium text-gray-700">Valid Until</label>
                     <div class="mt-1">
-                      <input v-model="data.valid_until" type="text" disabled name="valid-until" id="valid-until" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                      <input v-model="data.valid_until" type="date" name="valid-until" id="valid-until" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                     </div>
                   </div>
 
@@ -159,7 +172,7 @@ const submit = async () => {
               <router-link to="/residents">
                 Cancel
               </router-link>
-              </button>
+            </button>
             <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Save</button>
           </div>
         </div>

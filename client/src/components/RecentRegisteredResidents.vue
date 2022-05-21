@@ -66,6 +66,7 @@ onMounted(load)
                       <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
                       <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                       <th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Date Issued</th>
+                      <th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200">
@@ -73,7 +74,7 @@ onMounted(load)
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         <div class="flex">
                           <a :href="resident.href" class="group inline-flex space-x-2 truncate text-sm">
-                            <UserCircleIcon class="flex-shrink-0 h-6 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
+                            <!-- <UserCircleIcon class="flex-shrink-0 h-6 w-5 text-gray-400 group-hover:text-gray-500" aria-hidden="true" /> -->
                             <p class="text-gray-500 truncate group-hover:text-gray-900">
                               {{ resident.last_name }} {{ resident.first_name }}
                             </p>
@@ -82,6 +83,9 @@ onMounted(load)
                       </td>
                       <td class="max-w-0 w-full px-6 py-4 text-left truncate text-sm text-gray-500">
                         {{ resident.address }}
+                      </td>
+                      <td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
+                        <time :datetime="resident.datetime">{{ resident.date_issued }}</time>
                       </td>
                       <td class="px-6 py-4 text-right whitespace-nowrap text-sm text-gray-500">
                         <time :datetime="resident.datetime">{{ resident.date_issued }}</time>

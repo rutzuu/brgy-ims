@@ -22,7 +22,7 @@ const load = async( page = 1 ) => {
 onMounted(load)
 
 const del = async (id: Number) => {
-  if (confirm('Are you sure you are deleting this order?')) {
+  if (confirm('Are you sure you are deleting this transaction?')) {
     await axios.delete(`/orders/${id}`)
     alert('Order deleted')
     orders.value = orders.value.filter((p: Order) => p.id !== id)
@@ -33,13 +33,13 @@ const del = async (id: Number) => {
   <div class="p-4 sm:p-6 lg:p-8">
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
-        <h1 class="text-xl font-semibold text-gray-900">Orders</h1>
-        <p class="mt-2 text-sm text-gray-700">List or orders.</p>
+        <h1 class="text-xl font-semibold text-gray-900">Transactions</h1>
+        <p class="mt-2 text-sm text-gray-700">List or transactions.</p>
       </div>
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
         <button type="button" class="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto">
-          <router-link to="/orders/create">
-            Add New Order
+          <router-link to="/transactions/create">
+            Add New Transaction
           </router-link>
         </button>
       </div>
@@ -51,9 +51,9 @@ const del = async (id: Number) => {
             <table class="min-w-full divide-y divide-gray-300">
               <thead class="bg-gray-50">
                 <tr>
-                  <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Order ID</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Product Name</th>
-                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Product Code</th>
+                  <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Transaction ID</th>
+                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Document Name</th>
+                  <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Document Code</th>
                   <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Resident Name</th>
                   <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Price</th>
                   <th scope="col" class="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-6">
@@ -70,7 +70,7 @@ const del = async (id: Number) => {
                   <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-500">₱{{ order.product.price }}</td>
                   <td class="relative whitespace-nowrap py-2 flex justify-end pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                     <div class="ml-5 flex-shrink-0">
-                      <router-link :to="`/orders/${order.id}/edit`">
+                      <router-link :to="`/transactions/${order.id}/edit`">
                         <PencilIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
                       </router-link>
                     </div>

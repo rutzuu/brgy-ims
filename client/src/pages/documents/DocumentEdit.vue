@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter()
@@ -21,10 +21,10 @@ onMounted( async () => {
 })
 
 const submit = async () => {
-    if(confirm('Are you sure you are updating this product?')) {
+    if(confirm('Are you sure you are updating this document?')) {
       await axios.put(`/products/${route.params.id}`, data)
       alert('Product created successfully')
-      router.push('/products')
+      router.push('/documents')
     }
   }
 </script>
@@ -39,20 +39,20 @@ const submit = async () => {
           <div class="pt-8 space-y-6 sm:pt-10 sm:space-y-5">
             <div>
               <h3 class="text-lg leading-6 font-medium text-gray-900">Product Information</h3>
-              <p class="mt-1 max-w-2xl text-sm text-gray-500">Fill up the product details including the code and price.</p>
+              <p class="mt-1 max-w-2xl text-sm text-gray-500">Fill up the document details including the code and price.</p>
             </div>
             <div class="space-y-6 sm:space-y-5">
               <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label for="product-code" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Product Code </label>
+                <label for="document-code" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Product Code </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
-                  <input v-model="data.code" type="text" name="product-code" id="product-code" class="max-w-lg block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md required" />
+                  <input v-model="data.code" type="text" name="document-code" id="document-code" class="max-w-lg block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md required" />
                 </div>
               </div>
 
               <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                <label for="product-title" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Product Title </label>
+                <label for="document-title" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"> Product Title </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
-                  <input v-model="data.title" type="text" name="product-title" id="product-title" class="max-w-lg block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md required" />
+                  <input v-model="data.title" type="text" name="document-title" id="document-title" class="max-w-lg block w-full shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md required" />
                 </div>
               </div>
 
@@ -69,7 +69,7 @@ const submit = async () => {
         <div class="pt-5">
           <div class="flex justify-end">
             <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-              <router-link to="/products">
+              <router-link to="/documents">
                 Cancel
               </router-link>
             </button>

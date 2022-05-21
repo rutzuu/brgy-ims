@@ -44,9 +44,13 @@ export const Register = async (req: Request, res: Response) => {
 export const Login = async (req: Request, res: Response) => {
   const repository = AppDataSource.getRepository(User)
 
-  const user = await repository.findOneBy({
-    email: req.body.email
+  const user = await repository.findOne({
+    relations: ['role'],
+    where: {
+      email: req.body.email,
+    }
   })
+
   if (!user) {
     return res.status(400).json({
       success: false,
@@ -59,13 +63,21 @@ export const Login = async (req: Request, res: Response) => {
       error: 'Invalid email or password'
     })
   }
+    
+  if(!user.hasOwnProperty('role') || user.role === null) {
+    return res.status(400).json({
+      success: false,
+      error: 'Your account is not activated yet. Please contact admin for activation.'
+    })
+  }
 
   const token = sign({ id: user.id }, `${process.env.SECRET_KEY}`)
   res.cookie('token', token, {
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24
   })
-  res.send({ message: 'Logged in successfully' })
+  // res.send({ message: 'Logged in successfully' })
+  res.send(user)
 }
 
 export const Authenticate = async (req: Request, res: Response) => {

@@ -30,7 +30,7 @@ const productStyles = {
   <div class="relative border-gray-300 shadow-sm flex items-center">
     <div class="flex-1 min-w-0">
       <div>
-        <h2 class="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-0">Recent Orders</h2>
+        <h2 class="max-w-6xl mx-auto mt-8 px-4 text-lg leading-6 font-medium text-gray-900 sm:px-6 lg:px-0">Recent Transactions</h2>
 
         <!-- Activity list (smallest breakpoint only) -->
         <div class="shadow sm:hidden">
@@ -74,8 +74,9 @@ const productStyles = {
                     <tr>
                       <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number</th>
                       <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resident</th>
-                      <th class="hidden px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider md:block">Product</th>
-                      <th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                      <th class="hidden px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider md:block">Document</th>
+                      <th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                      <th class="px-6 py-3 bg-gray-50 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y divide-gray-200">

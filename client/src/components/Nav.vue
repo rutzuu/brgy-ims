@@ -6,11 +6,11 @@
   
   const navigation = [
     { name: 'Dashboard', href: '/', icon: HomeIcon, current: true },
-    { name: 'Orders', href: '/orders', icon: InboxIcon, current: false },
+    { name: 'Transactions', href: '/transactions', icon: InboxIcon, current: false },
     { name: 'Residents', href: '/residents', icon: UsersIcon, current: false },
     { name: 'Users', href: '/users', icon: UserGroupIcon, current: false },
     { name: 'Roles', href: '/roles', icon: IdentificationIcon, current: false },
-    { name: 'Products', href: '/products', icon: FolderIcon, current: false },
+    { name: 'Documents', href: '/documents', icon: FolderIcon, current: false },
     { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
   ]
 
@@ -35,7 +35,13 @@
   })
 
   const logout = async () => {
-    await axios.post('/logout')
+    try {
+      if(confirm('Are you sure you want to logout?')) {
+        await axios.post('/logout')
+      }
+      } catch (error) {
+        alert(error)
+    }
   }
 </script>
 
@@ -57,10 +63,12 @@
                 </div>
               </TransitionChild>
               <div class="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
-                <div class="flex items-center flex-shrink-0 px-2">
-                  <img class="h-20 w-auto" src="../assets/brgy-holy-spirit-logo.png" alt="Brgy. Holy Spirit" />
-                  <p class="text-gray-900 text-left pl-4 text-lg font-semibold">Brgy. Holy Spirit IMS</p>
+                <router-link to ="/">
+                  <div class="flex items-center flex-shrink-0 px-2">
+                    <img class="h-20 w-auto" src="../assets/brgy-holy-spirit-logo.png" alt="Brgy. Holy Spirit" />
+                    <p class="text-gray-900 text-left pl-4 text-lg font-semibold">Brgy. Holy Spirit IMS</p>
                 </div>
+                </router-link>
                 <div class="mt-5 flex-grow flex flex-col">
                   <nav class="flex-1 px-2 space-y-8 bg-white" aria-label="Sidebar">
                     <div class="space-y-1">
@@ -110,10 +118,12 @@
     <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
-      <div class="flex items-center flex-shrink-0 px-2">
-        <img class="h-20 w-auto" src="../assets/brgy-holy-spirit-logo.png" alt="Brgy. Holy Spirit" />
-        <p class="text-gray-900 text-left pl-4 text-lg font-semibold">Brgy. Holy<br/>Spirit IMS</p>
-      </div>
+      <router-link to="/">
+        <div class="flex items-center flex-shrink-0 px-2">
+            <img class="h-20 w-auto" src="../assets/brgy-holy-spirit-logo.png" alt="Brgy. Holy Spirit" />
+            <p class="text-gray-900 text-left pl-4 text-lg font-semibold">Brgy. Holy<br/>Spirit IMS</p>
+        </div>
+      </router-link>
       <div class="mt-5 flex-grow flex flex-col">
         <nav class="flex-1 px-2 space-y-8 bg-white" aria-label="Sidebar">
           <div class="space-y-1">
@@ -130,11 +140,6 @@
                   {{ item.name }}
                 </span>
               </router-link> -->
-              <router-link to="" @click="" class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
-                <span class="truncate">
-                  Settings
-                </span>
-              </router-link>
               <router-link to="" @click="" class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
                 <span class="truncate">
                   Profile

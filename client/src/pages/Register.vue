@@ -8,23 +8,10 @@
     last_name: '',
     email: '',
     password: '',
-    password_confirmation: '',
-    role_id: 2
+    password_confirmation: ''
   })
 
   const router = useRouter()
-  const roles = [{
-    id: '1',
-    name: 'Admin',
-  },
-  {
-    id: '2',
-    name: 'Employee',
-  },
-  {
-    id: '3',
-    name: 'Customer',
-  }]
 
   const submit = async () => {
     
@@ -32,27 +19,21 @@
       alert('Passwords do not match')
       return
     } else {
-      await axios.post('/register', data)
-      alert('Registered successfully')
-    await router.push('/login')
+        await axios.post('/register', data)
+        alert('Registered successfully./nPlease contact admin to activate your account.')
+        await router.push('/login')
+      }
     }
-  }
+  
 
 </script>
 <template>
   <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="w-full space-y-8">
-      <!-- <div class="sm:mx-auto sm:w-full sm:max-w-md"> -->
-        
-        <!-- <p class="mt-2 text-center text-sm text-gray-600">
-          {{ ' ' }}
-        </p> -->
-      <!-- </div> -->
 
       <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <h2 class="text-center text-2xl font-bold text-gray-90 px-8">Register to Brgy. Holy Spirit IMS</h2>
-          <!-- <img class="mx-auto h-24 w-auto bg-white rounded-full p-2 shadow-md" src="../assets/brgy-holy-spirit-logo.png" alt="Brgy. Holy Spirit Logo" /> -->
           <form @submit.prevent="submit" class="mt-4 space-y-6" action="#" method="POST">
             <div>
               <fieldset>
@@ -107,9 +88,7 @@
                 <div class="w-full border-t border-gray-300" />
               </div>
               <div class="relative flex justify-center text-sm">
-                <!-- <span class="px-2 bg-white text-gray-500"> Or continue with </span> -->
                 <router-link to="/login" class="px-2 bg-white font-medium text-blue-600 hover:text-blue-500"> Already have an account? Log in here. </router-link>
-
               </div>
             </div>
 

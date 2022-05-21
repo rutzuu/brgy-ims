@@ -18,6 +18,7 @@ import TransactionEdit from '../pages/transactions/TransactionEdit.vue'
 import Residents from '../pages/residents/Residents.vue'
 import ResidentCreate from '../pages/residents/ResidentCreate.vue'
 import ResidentEdit from '../pages/residents/ResidentEdit.vue'
+import Reports from '../pages/reports/Reports.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -41,6 +42,7 @@ const routes: Array<RouteRecordRaw> = [
         { path: '/transactions', component: Transactions },
         { path: '/transactions/create', component: TransactionCreate },
         { path: '/transactions/:id/edit', component: TransactionEdit },
+        { path: '/reports', component: Reports },
     ]}
     
 ]

@@ -9,19 +9,20 @@ import { randomInt } from 'crypto'
 AppDataSource.initialize().then(async () => {
   const OrderRepository = AppDataSource.getRepository(Order)
   // const OrderItemRepository = AppDataSource.getRepository(OrderItem)
-  // const ResidentRepository = AppDataSource.getRepository(Resident)
+  const ResidentRepository = AppDataSource.getRepository(Resident)
   const ProductRepository = AppDataSource.getRepository(Product)
 
   
   for (let i = 0; i < 30; i++) {
-    // const productId = await ProductRepository.findOne({ id: randomInt(0,5) })
+    const productId = await ProductRepository.findOne({ where: {id: i} })
+    const residentID = await ResidentRepository.findOne({ where: {id: i} })
     // const productId = randomInt(0,4)
     await OrderRepository.save({
       product: {
-        id: randomInt(0,5)
+        id: i,
       },
       resident: {
-        id: randomInt(0,30)
+        id: i,
       }
       // resident_id: residentId.id,
       // first_name: residentId.first_name,

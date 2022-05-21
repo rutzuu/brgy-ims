@@ -11,7 +11,7 @@
     { name: 'Users', href: '/users', icon: UserGroupIcon, current: false },
     { name: 'Roles', href: '/roles', icon: IdentificationIcon, current: false },
     { name: 'Documents', href: '/documents', icon: FolderIcon, current: false },
-    { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+    { name: 'Reports', href: '/reports', icon: ChartBarIcon, current: false },
   ]
 
   const account = ref()

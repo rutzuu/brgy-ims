@@ -3,7 +3,7 @@ import { Register, Login, Authenticate, Logout, UpdateInfo, UpdatePassword } fro
 import { Users, CreateUser, GetUser, UpdateUser, DeleteUser } from './controller/user.controller'
 import { Products, CreateProduct, GetProduct, UpdateProduct, DeleteProduct } from './controller/product.controller'
 import { AllResidents, RecentResidents, Residents, CreateResident, GetResident, UpdateResident, DeleteResident, ResidentsDashboard, LoginResident } from './controller/resident.controller'
-import { Chart, ExportCSV, Orders, CreateOrder, GetOrder, UpdateOrder, DeleteOrder, RecentOrders, OrdersDashboard } from './controller/order.controller'
+import { Chart, ExportCSV, Orders, CreateOrder, GetOrder, UpdateOrder, DeleteOrder, RecentOrders, OrdersDashboard, OrdersToday } from './controller/order.controller'
 import { UploadImages } from './controller/image.controller'
 import { Permissions } from './controller/permission.controller'
 import { Roles, CreateRole, GetRole, UpdateRole, DeleteRole } from './controller/role.controller'
@@ -86,6 +86,7 @@ export const routes = (router: Router) => {
   router.post('/api/orders/export-csv', AuthMiddleware, ExportCSV)
   router.post('/api/orders', AuthMiddleware, PermissionMiddleware('orders'), CreateOrder)
   //GET
+  router.get('/api/orders-today', AuthMiddleware, OrdersToday)
   router.get('/api/orders', AuthMiddleware, Orders)
   router.get('/api/orders/recent', AuthMiddleware, RecentOrders)
   router.get('/api/orders/dashboard', AuthMiddleware, OrdersDashboard)

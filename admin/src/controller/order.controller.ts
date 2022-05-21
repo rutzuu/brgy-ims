@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { date } from 'joi'
 import { Parser } from 'json2csv'
 import { AppDataSource } from '../../data-source'
 import { Order } from '../entity/order.entity'
@@ -23,6 +24,19 @@ export const Orders = async (req: Request, res: Response) => {
       last_page: Math.ceil(total / take)
     }
   })
+}
+
+export const OrdersToday = async (req: Request, res: Response) => {
+  const repository = AppDataSource.getRepository(Order)
+
+  const data = await repository.find({
+    relations: { product: true, resident: true },
+    // where: {
+    //   created_at: new Date().toJSON()
+    // }
+  })
+
+  res.send(data)
 }
 
 export const OrdersDashboard = async (req: Request, res: Response) => {
@@ -137,24 +151,31 @@ export const DeleteOrder = async (req: Request, res: Response) => {
 
 export const ExportCSV = async (req: Request, res: Response) => {
   const parser = new Parser({
-    fields: ['ID', 'Name', 'Email', 'Product Title', 'Price', 'Quantity']
+    fields: ['Transaction ID', 'Product Title', 'Product Code', 'Resident Name','Address', 'Phone Number', 'Price', 'Created At']
   })
 
   const repository = AppDataSource.getRepository(Order)
-
-  const orders = await repository.find()
+  const currentDay = new Date()
+  const orders = await repository.find({
+    relations: { product: true, resident: true },
+    // where: {
+    //   created_at: currentDay.toISOString()
+    // }
+  })
     // { relations: ['order_items'] }
 
   const json = []
 
   orders.forEach((order: Order) => {
     json.push({
-      ID: order.id,
-      // Name: order.name,
-      // Email: order.email,
-      'Product Title': '',
-      Price: '',
-      Quantity: ''
+      'Transaction ID': order.id,
+      'Product Title': order.product.title,
+      'Product Code': order.product.code,
+      'Resident Name': order.resident.first_name + ' ' + order.resident.last_name,
+      'Address': order.resident.address,
+      'Phone Number': order.resident.phone,
+      'Price': order.product.price,
+      'Created At': order.created_at
     })
 
     // order.order_items.forEach((item: OrderItem) => {
@@ -172,7 +193,7 @@ export const ExportCSV = async (req: Request, res: Response) => {
   const csv = parser.parse(json)
 
   res.header('Content-Type', 'text/csv')
-  res.attachment('orders.csv')
+  res.attachment('Transactions.csv')
   res.send(csv)
 }
 

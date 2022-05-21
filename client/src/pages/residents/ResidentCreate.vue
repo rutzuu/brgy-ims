@@ -11,7 +11,6 @@ const validUntilDate = new Date(date.getTime())
 
 const validity = validUntilDate.setFullYear(date.getFullYear() + 1)
 const validUntil = new Date(validity).toLocaleDateString()
-const validityDate = new Date(validity).toLocaleDateString()
 
 const data = reactive ({
   last_name: '',
@@ -20,7 +19,7 @@ const data = reactive ({
   email: '',
   phone: '',
   address: '',
-  date_issued: validityDate,
+  date_issued: currentDate,
   valid_until: validUntil,
   date_of_birth: '',
   gender: '',
